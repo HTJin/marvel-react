@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,
+*:before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: inherit;
+}
+html {
+  z-index: -999;
+  scroll-snap-type: y mandatory;
+  overflow-x: hidden;
+  user-select: none;
+  background: linear-gradient(180deg, #000346 0%, #ff0000 100%),
+    linear-gradient(58.72deg, #0029ff 0%, #aa0014 100%),
+    radial-gradient(100% 164.72% at 100% 100%, #ff00a8 0%, #00ff47 100%),
+    radial-gradient(100% 148.07% at 0% 0%, #fff500 0%, #51d500 100%);
+  background-blend-mode: overlay, overlay, difference, normal;
+}
+
+:root {
+  --bg-color: #00021b;
+  --main-color: #ff00a8;
+  --sub-color: #3c4c79;
+  --sub-alt-color: #18214c;
+  --text-color: azure;
+  --hover-color: #02d3b0;
+  --hover-extra-color: #3f887c;
+}
