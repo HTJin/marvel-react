@@ -27,8 +27,8 @@ export const NavBar = () => {
           <li
             className={`${
               location === "/"
-                ? "underline decoration-sky-400 decoration-wavy underline-offset-4"
-                : "duration-300 hover:underline hover:decoration-sky-400 hover:decoration-wavy hover:underline-offset-4"
+                ? "underline decoration-sky-400 decoration-double underline-offset-4"
+                : "duration-300 hover:underline hover:decoration-sky-400 hover:decoration-double hover:underline-offset-4"
             }`}
           >
             <Link className="p-[1em] no-underline" to="/">
@@ -39,8 +39,8 @@ export const NavBar = () => {
             <li
               className={`${
                 location === "/dashboard"
-                  ? "underline decoration-sky-400 decoration-wavy underline-offset-4"
-                  : "duration-300 hover:underline hover:decoration-sky-400 hover:decoration-wavy hover:underline-offset-4"
+                  ? "underline decoration-sky-400 decoration-double underline-offset-4"
+                  : "duration-300 hover:underline hover:decoration-sky-400 hover:decoration-double hover:underline-offset-4"
               }`}
             >
               <Link className="p-[1em] no-underline" to="/dashboard">
@@ -51,8 +51,8 @@ export const NavBar = () => {
             <li
               className={`${
                 location === "/register"
-                  ? "underline decoration-sky-400 decoration-wavy underline-offset-4"
-                  : "duration-300 hover:underline hover:decoration-sky-400 hover:decoration-wavy hover:underline-offset-4"
+                  ? "underline decoration-sky-400 decoration-double underline-offset-4"
+                  : "duration-300 hover:underline hover:decoration-sky-400 hover:decoration-double hover:underline-offset-4"
               }`}
             >
               <Link className="p-[1em] no-underline" to="/register">
@@ -63,7 +63,7 @@ export const NavBar = () => {
           {myAuth === "true" ? (
             <li
               onClick={logOut}
-              className="duration-300 hover:underline hover:decoration-sky-400 hover:decoration-wavy hover:underline-offset-4"
+              className="duration-300 hover:underline hover:decoration-sky-400 hover:decoration-double hover:underline-offset-4"
             >
               <Link className="p-[1em] no-underline" to="/">
                 Logout
@@ -73,8 +73,8 @@ export const NavBar = () => {
             <li
               className={`${
                 location === "/login"
-                  ? "underline decoration-sky-400 decoration-wavy underline-offset-4"
-                  : "duration-300 hover:underline hover:decoration-sky-400 hover:decoration-wavy hover:underline-offset-4"
+                  ? "underline decoration-sky-400 decoration-double underline-offset-4"
+                  : "duration-300 hover:underline hover:decoration-sky-400 hover:decoration-double hover:underline-offset-4"
               }`}
             >
               <Link className="p-[1em] no-underline" to="/login">
