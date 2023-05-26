@@ -1,23 +1,14 @@
+import { useState } from "react";
 import { NavBar } from "../shared/NavBar";
 import { CharacterForm } from "../CharacterForm";
 import { CharacterCard } from "../CharacterCard";
 import { serverCalls } from "../../api";
 import { useFetchData } from "../../hooks";
 import { Link } from "react-router-dom";
-
-interface Character {
-  id: string;
-  name: string;
-  super_name: string;
-  description: string;
-  comics_appeared_in: number;
-  super_power: string;
-  quote: string;
-  image: string;
-}
+import { Character } from "../shared/interfaces";
 
 export const Dashboard = () => {
-  const { characterData, getData } = useFetchData();
+  const { characterData, getData, setCharacterData } = useFetchData();
   const createNewCharacter = (character: Character) => {
     serverCalls
       .create(character)
@@ -28,11 +19,11 @@ export const Dashboard = () => {
         console.error("Error creating new character: ", error);
       });
   };
-  const submitEdit = (character: Character) => {
+  const submitEdit = (updatedCharacter: Character) => {
     serverCalls
-      .update(character.id, character)
+      .update(updatedCharacter.id, updatedCharacter)
       .then(() => {
-        getData();
+        setCharacterData(updatedCharacter);
       })
       .catch((error) => {
         console.error("Error updating character: ", error);
@@ -66,18 +57,20 @@ export const Dashboard = () => {
         {myAuth === "true" ? (
           <div className="relative grid scale-75 grid-cols-1 gap-x-6 gap-y-36 duration-500 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:gap-x-12 xl:col-span-2 xl:grid-cols-3">
             {Array.isArray(characterData) ? (
-              characterData.map((character: Character) => (
-                <CharacterCard
-                  key={character.id}
-                  character={character}
-                  onDelete={deleteData}
-                  onSubmit={submitEdit}
-                />
+              characterData.map((character: Character, index: number) => (
+                <div key={character.id} className={`order-[${index}]`}>
+                  <CharacterCard
+                    key={character.id}
+                    character={character}
+                    onDelete={deleteData}
+                    onSubmit={submitEdit}
+                  />
+                </div>
               ))
             ) : (
               <p>Loading...</p>
             )}
-            <div className="relative h-full snap-center self-center rounded-3xl border-4 border-blue-900 p-7 ring-4 ring-blue-600 ring-offset-4 ring-offset-indigo-800">
+            <div className="relative h-full snap-center rounded-3xl border-4 border-blue-900 p-7 ring-4 ring-blue-600 ring-offset-4 ring-offset-indigo-800">
               <CharacterForm
                 character={defaultCharacter}
                 onSubmit={createNewCharacter}

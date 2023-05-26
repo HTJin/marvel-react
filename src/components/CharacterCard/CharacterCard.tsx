@@ -1,17 +1,7 @@
 import { useState } from "react";
 import { CharacterForm } from "../CharacterForm";
 import placeholderHeroes from "../../static/images/Placeholder_couple_superhero.png";
-
-interface Character {
-  id: string;
-  name: string;
-  super_name: string;
-  description: string;
-  comics_appeared_in: number;
-  super_power: string;
-  quote: string;
-  image: string;
-}
+import { Character } from "../shared/interfaces";
 
 interface CharacterCardProps {
   character: Character;

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { serverCalls } from "../api";
+import { Character } from "../components/shared/interfaces";
 
 export const useFetchData = () => {
   const [characterData, setData] = useState<any>([]);
@@ -14,9 +15,17 @@ export const useFetchData = () => {
     }
   }
 
+  const setCharacterData = (updatedCharacter: Character) => {
+    setData(
+      characterData.map((character: Character) =>
+        character.id === updatedCharacter.id ? updatedCharacter : character
+      )
+    );
+  };
+
   useEffect(() => {
     handleDataFetch();
   }, []);
 
-  return { characterData, getData: handleDataFetch };
+  return { characterData, getData: handleDataFetch, setCharacterData };
 };
