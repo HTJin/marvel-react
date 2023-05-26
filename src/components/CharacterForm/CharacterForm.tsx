@@ -65,9 +65,9 @@ export const CharacterForm = (props: CharacterFormProps) => {
     <form
       onSubmit={handleSubmit(onSubmit)}
       method="post"
-      className="mb-6 grid grid-cols-2 place-items-stretch gap-x-6"
+      className="flex flex-col items-stretch p-8"
     >
-      <div className="w-80 text-base">
+      <div className="text-base">
         <div className="flex flex-col items-center">
           <label htmlFor="name" className="self-start">
             Name:
@@ -135,7 +135,7 @@ export const CharacterForm = (props: CharacterFormProps) => {
       </div>
       <button
         type="submit"
-        className="h-[6em] w-[6em] animate-trance cursor-pointer place-self-center rounded-full bg-lime-50 text-3xl font-bold duration-500 hover:animate-tranceBg hover:text-lime-50 hover:ring-4 hover:ring-lime-50 hover:ring-offset-2 hover:transition-all"
+        className="mt-8 h-[6em] w-[6em] animate-trance cursor-pointer place-self-center rounded-full bg-lime-50 text-3xl font-bold duration-500 hover:animate-tranceBg hover:text-lime-50 hover:ring-4 hover:ring-lime-50 hover:ring-offset-2 hover:transition-all"
       >
         Create
       </button>

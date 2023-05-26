@@ -4,6 +4,7 @@ import { CharacterForm } from "../CharacterForm";
 import { serverCalls } from "../../api";
 import { useFetchData } from "../../hooks";
 import { Link } from "react-router-dom";
+import placeholderHeroes from "../../static/images/Placeholder_couple_superhero.png";
 
 interface displayData {
   id?: string;
@@ -50,23 +51,16 @@ export const Dashboard = (props: displayData) => {
   };
   const myAuth = localStorage.getItem("myAuth");
   return (
-    <div className="m-0 overflow-x-hidden p-0 text-[var(--text-color)]">
+    <div className="m-0 h-[100vh] w-[100vw] snap-y snap-mandatory overflow-x-hidden p-0 text-[var(--text-color)]">
       <NavBar />
-      <div className="relative mx-auto my-[10vh] flex h-[80vh] w-[50vw] snap-center items-center justify-center self-center rounded-3xl border border-y-pink-200 bg-gray-900 bg-opacity-60">
-        {editData ? (
-          <CharacterForm character={editData} onSubmit={submitEdit} />
-        ) : (
-          <CharacterForm />
-        )}
-      </div>
-      {myAuth === "true" ? (
-        <div className="relative mx-auto my-[10vh] flex h-full w-[80%] snap-center items-center justify-center self-center rounded-3xl border border-y-pink-200 bg-gray-900 bg-opacity-60">
-          <div className="relative grid scale-75 grid-cols-1 gap-x-6 gap-y-20 sm:grid-cols-2 md:grid-cols-3 lg:mx-0 lg:max-w-none lg:gap-x-8 xl:col-span-2">
+      <div className="relative mx-auto my-[10vh] flex w-[80%] items-center justify-center self-center rounded-3xl border border-y-pink-200 bg-gray-900 bg-opacity-60">
+        {myAuth === "true" ? (
+          <div className="relative grid scale-75 grid-cols-1 gap-x-6 gap-y-36 duration-500 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:gap-x-12 xl:col-span-2 xl:grid-cols-3">
             {Array.isArray(characterData) ? (
               characterData.map((character: Character) => (
                 <div
                   key={character.id}
-                  className="relative snap-center rounded-3xl border-4 border-blue-900 p-7 ring-4 ring-blue-600 ring-offset-4 ring-offset-indigo-800"
+                  className="relative h-full snap-center self-center rounded-3xl border-4 border-blue-900 p-7 ring-4 ring-blue-600 ring-offset-4 ring-offset-indigo-800"
                   id="character-cards"
                 >
                   <div className="z-50 -mt-5 translate-y-5 transform rounded-3xl bg-gray-100 p-5 font-commando text-3xl text-gray-900 shadow-inner shadow-gray-700">
@@ -74,7 +68,12 @@ export const Dashboard = (props: displayData) => {
                   </div>
                   <span className="-translate-y-15 relative bottom-0 right-20 z-10 float-right h-10 w-10 rotate-45 transform bg-gray-100"></span>
                   <img
-                    src={character.image}
+                    src={
+                      character.image ==
+                      "../static/images/Placeholder_couple_superhero.png"
+                        ? placeholderHeroes
+                        : character.image
+                    }
                     alt={character.super_name}
                     className="z-0 aspect-[3/2] w-full rounded-md object-cover"
                   />
@@ -121,46 +120,53 @@ export const Dashboard = (props: displayData) => {
             ) : (
               <p>Loading...</p>
             )}
-          </div>
-        </div>
-      ) : (
-        <div className="flex flex-col items-center">
-          <h3 className="ml-[1.5ch] text-lg">
-            Hey now, you're not logged in 😮
-          </h3>
-          <div className="mt-8 flex flex-col items-center justify-center">
-            <Link
-              className="font-xl animate-tranceBg rounded-full px-5 py-3 hover:outline hover:outline-[var(--hover-color)]"
-              to={"/login"}
-            >
-              Log Me In!
-            </Link>
-            <div className="relative flex justify-center py-4 text-sm font-medium">
-              <div
-                className="relative inset-0 flex items-center"
-                aria-hidden="true"
-              >
-                <div className="w-10 border-t border-gray-200" />
-              </div>
-              <span className="bg-transparent px-4 text-[var(--text-color)]">
-                Or
-              </span>
-              <div
-                className="relative inset-0 flex items-center"
-                aria-hidden="true"
-              >
-                <div className="w-10 border-t border-gray-200" />
-              </div>
+            <div className="relative h-full snap-center self-center rounded-3xl border-4 border-blue-900 p-7 ring-4 ring-blue-600 ring-offset-4 ring-offset-indigo-800">
+              {editData ? (
+                <CharacterForm character={editData} onSubmit={submitEdit} />
+              ) : (
+                <CharacterForm />
+              )}
             </div>
-            <Link
-              className="font-xl animate-tranceBg rounded-full px-6 py-3 hover:outline hover:outline-[var(--hover-color)]"
-              to={"/register"}
-            >
-              Register Me!
-            </Link>
           </div>
-        </div>
-      )}
+        ) : (
+          <div className="flex flex-col items-center">
+            <h3 className="ml-[1.5ch] text-lg">
+              Hey now, you're not logged in 😮
+            </h3>
+            <div className="mt-8 flex flex-col items-center justify-center">
+              <Link
+                className="font-xl animate-tranceBg rounded-full px-5 py-3 hover:outline hover:outline-[var(--hover-color)]"
+                to={"/login"}
+              >
+                Log Me In!
+              </Link>
+              <div className="relative flex justify-center py-4 text-sm font-medium">
+                <div
+                  className="relative inset-0 flex items-center"
+                  aria-hidden="true"
+                >
+                  <div className="w-10 border-t border-gray-200" />
+                </div>
+                <span className="bg-transparent px-4 text-[var(--text-color)]">
+                  Or
+                </span>
+                <div
+                  className="relative inset-0 flex items-center"
+                  aria-hidden="true"
+                >
+                  <div className="w-10 border-t border-gray-200" />
+                </div>
+              </div>
+              <Link
+                className="font-xl animate-tranceBg rounded-full px-6 py-3 hover:outline hover:outline-[var(--hover-color)]"
+                to={"/register"}
+              >
+                Register Me!
+              </Link>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
