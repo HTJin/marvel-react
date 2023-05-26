@@ -6,6 +6,9 @@ module.exports = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    fontFamily: {
+      commando: ["Commando", "sans-serif"],
+    },
     extend: {
       animation: {
         trance: "trance 5s linear infinite",

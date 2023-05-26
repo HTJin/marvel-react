@@ -20,7 +20,7 @@ export const Login = () => {
       .then((userCredential) => {
         localStorage.setItem("myAuth", "true");
         const user = userCredential.user;
-        console.log(`Welcome back, ${user}`);
+        console.log(`Welcome back, ${JSON.stringify(user)}`);
         navigate("/dashboard");
       })
       .catch((err) => {

@@ -11,18 +11,42 @@ import {
 } from "../../redux/slices/rootSlice";
 import { serverCalls } from "../../api";
 
+interface Character {
+  id: string;
+  name: string;
+  super_name: string;
+  description: string;
+  comics_appeared_in: number;
+  super_power: string;
+  quote: string;
+  image: string;
+}
+
 interface CharacterFormProps {
-  id?: string;
-  data?: any;
+  character?: Character;
+  onSubmit?: (character: Character) => void;
 }
 
 export const CharacterForm = (props: CharacterFormProps) => {
   const dispatch = useDispatch();
   const store = useStore();
-  const { register, handleSubmit } = useForm({});
+  const defaultCharacter: Character = {
+    id: "",
+    name: "",
+    super_name: "",
+    description: "",
+    comics_appeared_in: 0,
+    super_power: "",
+    quote: "",
+    image: "",
+  };
+  const { register, handleSubmit } = useForm<Character>({
+    defaultValues: props.character || defaultCharacter
+  });
   const onSubmit = async (data: any, event: any) => {
-    if (props.id!) {
-      await serverCalls.update(props.id!, data);
+    event.preventDefault();
+    if (props.character && props.character.id) {
+      await serverCalls.update(props.character.id, data);
       window.location.reload();
       event.target.reset();
     } else {
@@ -111,7 +135,7 @@ export const CharacterForm = (props: CharacterFormProps) => {
       </div>
       <button
         type="submit"
-        className="h-[6em] w-[6em] cursor-pointer place-self-center rounded-full bg-lime-50 text-3xl font-bold animate-trance duration-500 hover:animate-tranceBg hover:text-lime-50 hover:ring-4 hover:ring-lime-50 hover:ring-offset-2 hover:transition-all"
+        className="h-[6em] w-[6em] animate-trance cursor-pointer place-self-center rounded-full bg-lime-50 text-3xl font-bold duration-500 hover:animate-tranceBg hover:text-lime-50 hover:ring-4 hover:ring-lime-50 hover:ring-offset-2 hover:transition-all"
       >
         Create
       </button>

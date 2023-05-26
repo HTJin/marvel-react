@@ -30,3 +30,8 @@ html {
   --hover-color: #02d3b0;
   --hover-extra-color: #3f887c;
 }
+
+@font-face {
+  font-family: "Commando";
+  src: url(https://fonts.cdnfonts.com/s/1825/Comicv3.woff);
+}

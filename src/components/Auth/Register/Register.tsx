@@ -15,7 +15,7 @@ export const Register = () => {
     createUserWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log(`Welcome, ${user}`);
+        console.log(`Welcome, ${JSON.stringify(user)}`);
         navigate("/login");
       })
       .catch((err) => {
