@@ -48,9 +48,12 @@ export const serverCalls = {
       }
     );
     if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Error data: ", errorData);
       throw new Error("Failed to update data on server");
     }
-    console.log(`Successfully updated drone with id ${id}`);
+    console.log(`Successfully updated character with id ${id}`);
+    return response;
   },
   delete: async (id: string) => {
     const response = await fetch(
@@ -64,7 +67,7 @@ export const serverCalls = {
       }
     );
     if (!response.ok) {
-      throw new Error(`Failed to delete drone with id ${id}`);
+      throw new Error(`Failed to delete character with id ${id}`);
     }
   },
 };

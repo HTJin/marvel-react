@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useDispatch, useStore } from "react-redux";
 import { useForm } from "react-hook-form";
 import {
@@ -23,32 +24,40 @@ interface Character {
 }
 
 interface CharacterFormProps {
-  character?: Character;
+  character?: Character | null;
   onSubmit?: (character: Character) => void;
+  onCancel?: () => void;
 }
 
 export const CharacterForm = (props: CharacterFormProps) => {
   const dispatch = useDispatch();
   const store = useStore();
-  const defaultCharacter: Character = {
-    id: "",
-    name: "",
-    super_name: "",
-    description: "",
-    comics_appeared_in: 0,
-    super_power: "",
-    quote: "",
-    image: "",
-  };
+  const [isEditButtonClicked, setIsEditButtonClicked] = useState(false);
   const { register, handleSubmit } = useForm<Character>({
-    defaultValues: props.character || defaultCharacter
+    defaultValues: props.character || {
+      id: "",
+      name: "",
+      super_name: "",
+      description: "",
+      comics_appeared_in: 0,
+      super_power: "",
+      quote: "",
+      image: "",
+    },
   });
+  const isEditMode = props.character && props.character.id;
+  const isFormInEditMode = isEditMode && isEditButtonClicked;
   const onSubmit = async (data: any, event: any) => {
     event.preventDefault();
-    if (props.character && props.character.id) {
-      await serverCalls.update(props.character.id, data);
-      window.location.reload();
-      event.target.reset();
+    if (isFormInEditMode) {
+      try {
+        await serverCalls.update(data.id, data);
+        props.onSubmit && props.onSubmit(data);
+        setIsEditButtonClicked(false);
+        event.target.reset();
+      } catch (error) {
+        console.error("Error updating character: ", error);
+      }
     } else {
       dispatch(getName(data.name));
       dispatch(getSuperName(data.super_name));
@@ -57,8 +66,10 @@ export const CharacterForm = (props: CharacterFormProps) => {
       dispatch(getSuperPower(data.super_power));
       dispatch(getQuote(data.quote));
       dispatch(getImage(data.image));
-      await serverCalls.create(store.getState());
-      window.location.reload();
+      if (props.onSubmit) {
+        props.onSubmit({ ...data });
+      }
+      event.target.reset();
     }
   };
   return (
@@ -133,12 +144,30 @@ export const CharacterForm = (props: CharacterFormProps) => {
           />
         </div>
       </div>
-      <button
-        type="submit"
-        className="mt-8 h-[6em] w-[6em] animate-trance cursor-pointer place-self-center rounded-full bg-lime-50 text-3xl font-bold duration-500 hover:animate-tranceBg hover:text-lime-50 hover:ring-4 hover:ring-lime-50 hover:ring-offset-2 hover:transition-all"
-      >
-        Create
-      </button>
+      {isEditMode ? (
+        <div className="flex">
+          <button
+            type="submit"
+            className="mx-auto mt-8 h-[6em] w-[6em] animate-trance cursor-pointer rounded-full bg-lime-50 text-3xl font-bold duration-500 hover:animate-tranceBg hover:text-lime-50 hover:ring-4 hover:ring-lime-50 hover:ring-offset-2 hover:transition-all"
+          >
+            Edit
+          </button>
+          <button
+            type="button"
+            onClick={props.onCancel}
+            className="-ml-[2em] h-[2em] w-[2em] self-end rounded-full bg-red-500"
+          >
+            ❌
+          </button>
+        </div>
+      ) : (
+        <button
+          type="submit"
+          className="mt-8 h-[6em] w-[6em] animate-trance cursor-pointer place-self-center rounded-full bg-lime-50 text-3xl font-bold duration-500 hover:animate-tranceBg hover:text-lime-50 hover:ring-4 hover:ring-lime-50 hover:ring-offset-2 hover:transition-all"
+        >
+          Create
+        </button>
+      )}
     </form>
   );
 };
