@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useDispatch, useStore } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import {
   getName,
@@ -31,8 +30,6 @@ interface CharacterFormProps {
 
 export const CharacterForm = (props: CharacterFormProps) => {
   const dispatch = useDispatch();
-  const store = useStore();
-  const [isEditButtonClicked, setIsEditButtonClicked] = useState(false);
   const { register, handleSubmit } = useForm<Character>({
     defaultValues: props.character || {
       id: "",
@@ -46,14 +43,12 @@ export const CharacterForm = (props: CharacterFormProps) => {
     },
   });
   const isEditMode = props.character && props.character.id;
-  const isFormInEditMode = isEditMode && isEditButtonClicked;
   const onSubmit = async (data: any, event: any) => {
     event.preventDefault();
-    if (isFormInEditMode) {
+    if (isEditMode) {
       try {
         await serverCalls.update(data.id, data);
         props.onSubmit && props.onSubmit(data);
-        setIsEditButtonClicked(false);
         event.target.reset();
       } catch (error) {
         console.error("Error updating character: ", error);

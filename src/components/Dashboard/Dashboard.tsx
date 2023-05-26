@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { NavBar } from "../shared/NavBar";
 import { CharacterForm } from "../CharacterForm";
 import { CharacterCard } from "../CharacterCard";
@@ -18,8 +17,6 @@ interface Character {
 }
 
 export const Dashboard = () => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [currentCharacter, setCurrentCharacter] = useState<Character | null>(null);
   const { characterData, getData } = useFetchData();
   const createNewCharacter = (character: Character) => {
     serverCalls
@@ -61,10 +58,6 @@ export const Dashboard = () => {
     quote: "",
     image: "",
   };
-  const handleCancelClick = () => {
-    setIsEditing(false);
-    setCurrentCharacter(null);
-  }
   const myAuth = localStorage.getItem("myAuth");
   return (
     <div className="m-0 h-[100vh] w-[100vw] snap-y snap-mandatory overflow-x-hidden p-0 text-[var(--text-color)]">
@@ -79,7 +72,6 @@ export const Dashboard = () => {
                   character={character}
                   onDelete={deleteData}
                   onSubmit={submitEdit}
-                  onCancel={handleCancelClick}
                 />
               ))
             ) : (

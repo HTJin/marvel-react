@@ -47,7 +47,6 @@ const rootSlice = createSlice({
     },
   },
 });
-// export Reducer
 export const reducer = rootSlice.reducer;
 export const {
   getName,

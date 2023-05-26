@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { CharacterForm } from "../CharacterForm";
 import placeholderHeroes from "../../static/images/Placeholder_couple_superhero.png";
-import { serverCalls } from "../../api";
-import { useFetchData } from "../../hooks";
 
 interface Character {
   id: string;
@@ -19,7 +17,6 @@ interface CharacterCardProps {
   character: Character;
   onDelete: (id: string) => void;
   onSubmit: (character: Character) => void;
-  onCancel: () => void;
   onEdit?: (character: Character) => void;
 }
 
@@ -27,9 +24,7 @@ export const CharacterCard = ({
   character,
   onDelete,
   onSubmit,
-  onCancel,
 }: CharacterCardProps) => {
-  const { characterData, getData } = useFetchData();
   const [isEditing, setIsEditing] = useState(false);
   const handleEditClick = () => {
     setIsEditing(true);
@@ -37,7 +32,6 @@ export const CharacterCard = ({
   const handleSubmit = async (updatedCharacter: Character) => {
     setIsEditing(false);
     onSubmit(updatedCharacter);
-    getData();
   };
   const handleCancelClick = () => {
     setIsEditing(false);

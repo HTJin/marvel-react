@@ -52,7 +52,6 @@ export const serverCalls = {
       console.error("Error data: ", errorData);
       throw new Error("Failed to update data on server");
     }
-    console.log(`Successfully updated character with id ${id}`);
     return response;
   },
   delete: async (id: string) => {
